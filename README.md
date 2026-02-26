@@ -53,7 +53,7 @@ A Spack package is provided in `spack/`:
 
 ```bash
 spack repo add ./spack
-spack info <package name>
+spack info hemepure
 ```
 
 Varios configuration options and boundary conditions are set at compile time and are exposed as variants in the
@@ -126,7 +126,7 @@ in a separate repository: [https://github.com/ukri-bench/system-configs]
 
 ### Manual build
 
-Manual build instructions using CMake are given in [the HemePure README](https://github.com/UCL-CCS/HemePure?tab=readme-ov-file#compilation). To compile these benchmarks, use the following CMake options (replacing the C and CXX compilers as appropriate).
+Manual build instructions using CMake are given in [the HemePure README](https://github.com/UCL-CCS/HemePure?tab=readme-ov-file#compilation). To compile these benchmarks, build the `hemepure` application using the following CMake options (replacing the C and CXX compilers as appropriate).
 
 ```bash
 cmake -DCMAKE_C_COMPILER=gcc \
@@ -155,7 +155,11 @@ report them.
 
 The ReFrame test configuration is available in the `reframe/` subdirectory.
 
-ADD: Instructions on running ReFrame for this benchmark.
+To run reframe for this benchmark, use
+
+```
+reframe -c reframe/hemepure.py -r
+```
 
 Note: to use ReFrame, you must have ReFrame installed on the system you are using and
 a valid ReFrame system configuration. Example ReFrame configurations are available
@@ -169,8 +173,12 @@ To run the benchmarks, extract the data, then run `hemepure` with
 mpirun -np xx hemepure -in input.xml -out results
 ```
 
+Performance Figure of Merit (FoM) can be extracted from the output file report.xml. 
+The FoM is millions of lattice updates per second (MLUPS). This is calculated as
+
+`number_of_sites * number_of_timesteps / (runtime * 1e6)`
+
 - ADD: Example of how to test correctness
-- ADD: Example of how to extract performance/FoM
 
 ## Example performance data
 
