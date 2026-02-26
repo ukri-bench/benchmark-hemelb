@@ -1,4 +1,4 @@
-# Template benchmark
+# HemeLB benchmark
 
 The repository demonstrates/describes the structure of a repository for a
 benchmark released as part of the UKRI Living Benchmarks project.
