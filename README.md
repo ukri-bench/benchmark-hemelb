@@ -1,6 +1,6 @@
 # Template benchmark
 
-The repository demonstrates/describes the structure of a repository for a 
+The repository demonstrates/describes the structure of a repository for a
 benchmark released as part of the UKRI Living Benchmarks project.
 
 ## Status
@@ -41,7 +41,7 @@ Alpha
 
 ## Building the benchmark
 
-The benchmark can be built using Spack or manually using CMake. If you are using the 
+The benchmark can be built using Spack or manually using CMake. If you are using the
 ReFrame method to run the benchmark described below, it will automatically
 perform the build step for you.
 
@@ -49,7 +49,9 @@ Once it has been built the CPU benchmark executable is called `hemepure`
 
 ### Spack build
 
-A Spack package is provided in `spack/`:
+#### CPU
+
+A Spack package is provided in `spack/hemepure`:
 
 ```bash
 spack repo add ./spack
@@ -119,6 +121,7 @@ Variants:
 
 ```
 
+#### GPU
 
 Note: to use Spack, you must have Spack installed on the system you are using and
 a valid Spack system configuration. Example Spack configurations are available
@@ -126,7 +129,9 @@ in a separate repository: [https://github.com/ukri-bench/system-configs]
 
 ### Manual build
 
-Manual build instructions using CMake are given in [the HemePure README](https://github.com/UCL-CCS/HemePure?tab=readme-ov-file#compilation). To compile these benchmarks, build the `hemepure` application using the following CMake options (replacing the C and CXX compilers as appropriate).
+#### CPU
+
+Manual build instructions using CMake are given in [the HemePure README](https://github.com/UCL-CCS/HemePure?tab=readme-ov-file#compilation). To compile these benchmarks on CPU, build the `hemepure` application using the following CMake options (replacing the C and CXX compilers as appropriate).
 
 ```bash
 cmake -DCMAKE_C_COMPILER=gcc \
@@ -143,9 +148,60 @@ cmake -DCMAKE_C_COMPILER=gcc \
       -DCMAKE_BUILD_TYPE=Release \
 ```
 
+#### GPU
+
+Manual build instructions using CMake are given in [the HemePure-GPU README](https://github.com/UCL-CCS/HemePure-GPU?tab=readme-ov-file#compilation). You can select different GPU backends (CUDA, HIP-CUDA, HIP-ROCM) with the `HEMELB_GPU_BACKEND` option.
+
+To compile these benchmarks for a NVIDIA CUDA backend, build the `hemepure_gpu` application
+
+```
+cmake -DCMAKE_C_COMPILER=gcc \
+      -DCMAKE_CXX_COMPILER=g++ \
+      -DCMAKE_CXX_EXTENSIONS=OFF \
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+      -DHEMELB_COMPUTE_ARCHITECTURE=NEUTRAL \
+      -DHEMELB_GPU_BACKEND=CUDA \
+      -DHEMELB_CUDA_AWARE_MPI=OFF \
+      -DCMAKE_CUDA_ARCHITECTURES=80 \
+      -DHEMELB_USE_MPI_PARALLEL_IO=OFF \
+      -DHEMELB_USE_VELOCITY_WEIGHTS_FILE=OFF \
+      -DHEMELB_INLET_BOUNDARY=NASHZEROTHORDERPRESSUREIOLET \
+      -DHEMELB_WALL_INLET_BOUNDARY=NASHZEROTHORDERPRESSURESBB \
+      -DHEMELB_OUTLET_BOUNDARY=NASHZEROTHORDERPRESSUREIOLET \
+      -DHEMELB_WALL_OUTLET_BOUNDARY=NASHZEROTHORDERPRESSURESBB \
+      -DHEMELB_WALL_BOUNDARY=SIMPLEBOUNCEBACK \
+      -DHEMELB_LOG_LEVEL="Info" \
+      ..
+```
+
+To compile these benchmarks for a AMD HIP ROCm backend, build the `hemepure_gpu` application with
+
+```
+cmake -DCMAKE_C_COMPILER=hipcc \
+      -DCMAKE_CXX_COMPILER=hipcc \
+      -DHEMELB_GPU_BACKEND=HIP_ROCM \
+      -DHEMELB_CUDA_AWARE_MPI=OFF \
+      -DHEMELB_COMPUTE_ARCHITECTURE=NEUTRAL \
+      -DCMAKE_CXX_EXTENSIONS=OFF \
+      -DHEMELB_USE_VELOCITY_WEIGHTS_FILE=OFF \
+      -DHEMELB_INLET_BOUNDARY=NASHZEROTHORDERPRESSUREIOLET \
+      -DHEMELB_WALL_INLET_BOUNDARY=NASHZEROTHORDERPRESSURESBB \
+      -DHEMELB_OUTLET_BOUNDARY=NASHZEROTHORDERPRESSUREIOLET \
+      -DHEMELB_WALL_OUTLET_BOUNDARY=NASHZEROTHORDERPRESSURESBB \
+      -DHEMELB_LOG_LEVEL="Info" \
+      -DHEMELB_USE_MPI_PARALLEL_IO=OFF \
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+      -DCMAKE_HIP_ARCHITECTURES=gfx90a \
+      -DHIP_SEPARABLE_COMPILATION=ON \
+      ..
+```
+
+Adjust the `CMAKE_CUDA_ARCHITECTURES` and `CMAKE_HIP_ARCHITECTURES` options to the GPU architecture you are compiling for.
+The above examples have been tested on NVIDIA V100 and AMD MI200 GPUs.
+
 ## Running the benchmark
 
-The benchmark can be run using ReFrame or manually. 
+The benchmark can be run using ReFrame or manually.
 
 If you use ReFrame, then ReFrame will build the software, run the benchmark,
 test for correctness, extract the performance/figure of merit (FoM) for you and
@@ -167,16 +223,18 @@ in a separate repository: [https://github.com/ukri-bench/system-configs]
 
 ### Running manually
 
-Input data for the benchmarks can be retrieved from [Zenodo](https://zenodo.org/records/14859634). 
+Input data for the benchmarks can be retrieved from [Zenodo](https://zenodo.org/records/14859634).
 To run the benchmarks, extract the data, then run `hemepure` with
 ```
 mpirun -np xx hemepure -in input.xml -out results
 ```
 
-Performance Figure of Merit (FoM) can be extracted from the output file report.xml. 
-The FoM is millions of lattice updates per second (MLUPS). This is calculated as
+Performance Figure of Merit (FoM) can be extracted from the output file `report.xml`.
+The FoM is millions of lattice updates per second (MLUPS). This is calculated as the
+number of lattice sites * the number of time steps / (total run time * 1,000,000), or
+using the labels in `report.xml`:
 
-`number_of_sites * number_of_timesteps / (runtime * 1e6)`
+`sites * timsteps / (Total * 1e6)`
 
 - ADD: Example of how to test correctness
 
