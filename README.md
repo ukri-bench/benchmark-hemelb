@@ -248,6 +248,7 @@ This section contains example performance data from selected HPC systems.
 | System | Architecture | Number of nodes | Number of MPI ranks | Number of GPUs | MLUPS |
 |-|-|-|-|-|-|
 | Cosma | NVIDIA A100 40GB | 1 | 3 | 1 | 565.7 |
+| Cosma | AMD Milan 7763 | 1 | 128 | 0 | 273.4 | 
 
 ## License
 
