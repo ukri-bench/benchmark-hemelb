@@ -244,9 +244,9 @@ This section contains example performance data from selected HPC systems.
 
 ### NVIDIA-TestPipe
 
-| System | Architecture | Number of nodes | Number of ranks | MLUPS |
-|-|-|-|-|-|
-| Cosma | NVIDIA A100 40GB | 1 | 1 | 565.7 |
+| System | Architecture | Number of nodes | Number of MPI ranks | Number of GPUs | MLUPS |
+|-|-|-|-|-|-|
+| Cosma | NVIDIA A100 40GB | 1 | 3 | 1 | 565.7 |
 
 ## License
 
