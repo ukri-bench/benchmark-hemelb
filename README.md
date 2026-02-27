@@ -197,7 +197,7 @@ cmake -DCMAKE_C_COMPILER=hipcc \
 ```
 
 Adjust the `CMAKE_CUDA_ARCHITECTURES` and `CMAKE_HIP_ARCHITECTURES` options to the GPU architecture you are compiling for.
-The above examples have been tested on NVIDIA V100 and AMD MI200 GPUs.
+The above examples have been tested on NVIDIA A100 and AMD MI210 GPUs.
 
 ## Running the benchmark
 
