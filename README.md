@@ -242,7 +242,11 @@ using the labels in `report.xml`:
 
 This section contains example performance data from selected HPC systems.
 
-ADD: Example performance data
+### NVIDIA-TestPipe
+
+| System | Architecture | Number of nodes | Number of ranks | MLUPS |
+|-|-|-|-|-|
+| Cosma | NVIDIA A100 40GB | 1 | 1 | 565.7 |
 
 ## License
 
