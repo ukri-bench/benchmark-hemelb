@@ -146,6 +146,7 @@ cmake -DCMAKE_C_COMPILER=gcc \
       -DHEMELB_LOG_LEVEL="Info" \
       -DHEMELB_USE_MPI_PARALLEL_IO=OFF \
       -DCMAKE_BUILD_TYPE=Release \
+      ..
 ```
 
 #### GPU
