@@ -21,7 +21,7 @@ Alpha
 ### Architectures
 
 - CPU: Tested on x86
-- GPU: Tested on NVIDIA, AMD in progress
+- GPU: Tested on NVIDIA A100, AMD MI300A
 
 ### Languages and programming models
 
