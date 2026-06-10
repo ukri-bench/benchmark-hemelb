@@ -49,6 +49,10 @@ Once it has been built the CPU benchmark executable is called `hemepure`
 
 ### Spack build
 
+Note: to use Spack, you must have Spack installed on the system you are using and
+a valid Spack system configuration. Example Spack configurations are available
+in a separate repository: [https://github.com/ukri-bench/system-configs]
+
 #### CPU
 
 A Spack package is provided in `spack/hemepure`:
@@ -123,9 +127,7 @@ Variants:
 
 #### GPU
 
-Note: to use Spack, you must have Spack installed on the system you are using and
-a valid Spack system configuration. Example Spack configurations are available
-in a separate repository: [https://github.com/ukri-bench/system-configs]
+Spack recipe for the GPU builds is not currently implemented
 
 ### Manual build
 
