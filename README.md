@@ -256,3 +256,7 @@ This section contains example performance data from selected HPC systems.
 ## License
 
 This benchmark description and associated files are released under the MIT license.
+
+The HemeLB code is distributed under the BSD-3 license
+
+The HemeLB code depends on a number of libraries with their own licenses. Of particular note is the [Parmetis](https://github.com/KarypisLab/ParMETIS?tab=License-1-ov-file#readme) library which is only free for academic use.
